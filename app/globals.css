@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #05070d;
+  --color-deck: #0b0f19;
+  --color-panel: #101624;
+  --color-raised: #182032;
+  --color-line: #232d42;
+  --color-line-strong: #36445f;
+  --color-ink: #e8edf6;
+  --color-ink-dim: #9aa7bd;
+  --color-ink-faint: #6b7890;
+  --color-solar: #f6b73c;
+  --color-solar-deep: #c98f1e;
+  --color-signal: #5cc8e8;
+  --color-ok: #3ddc97;
+  --color-warn: #f6b73c;
+  --color-bad: #ff5d6c;
+
+  --font-sans: var(--font-plex-thai), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* A faint, fixed star field shared by every page. */
+.starfield {
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, #ffffff55, transparent),
+    radial-gradient(1px 1px at 72% 12%, #ffffff44, transparent),
+    radial-gradient(1px 1px at 38% 68%, #ffffff33, transparent),
+    radial-gradient(1.5px 1.5px at 88% 58%, #ffffff44, transparent),
+    radial-gradient(1px 1px at 58% 88%, #ffffff33, transparent),
+    radial-gradient(1px 1px at 22% 82%, #ffffff44, transparent),
+    radial-gradient(1.5px 1.5px at 48% 32%, #ffffff33, transparent),
+    radial-gradient(1px 1px at 92% 28%, #ffffff33, transparent);
+  background-size: 460px 460px;
+}
+
+/* Small technical captions above values and sections. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+}
+
+.range-solar {
+  accent-color: var(--color-solar);
+}
+
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
