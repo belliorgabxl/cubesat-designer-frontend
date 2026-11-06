@@ -1,5 +1,3 @@
-// Snapping helpers. These only decide where a part may land; every budget figure comes from Django.
-
 import type { Face, Frame, InternalPlacement, Module, ModuleMap, Placements } from "./types";
 
 export const EMPTY_PLACEMENTS: Placements = { internal: [], faces: [] };
@@ -17,7 +15,6 @@ export function occupiedSlots(internal: InternalPlacement[], modules: ModuleMap)
   return occupied;
 }
 
-/** Start of the free run of `size` slots closest to `target`, or null when none exists. */
 export function nearestFreeStart(
   occupied: Set<number>,
   slotCount: number,
@@ -56,7 +53,6 @@ export function fitsFrame(module: Module, frame: Frame): boolean {
   return module.fits_frame_sizes.length === 0 || module.fits_frame_sizes.includes(frame.size_u);
 }
 
-/** Keep what still fits after a frame change; also drops modules no longer in the catalogue. */
 export function adaptPlacements(
   placements: Placements,
   frame: Frame,

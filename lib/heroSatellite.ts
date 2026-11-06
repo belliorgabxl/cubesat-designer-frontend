@@ -1,4 +1,3 @@
-// A fixed 3U for the landing page, so it still renders when the backend is not running.
 
 import type { Category, Frame, Module, ModuleMap, MountType, Placements } from "./types";
 

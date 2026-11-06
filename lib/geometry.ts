@@ -1,4 +1,3 @@
-// Satellite-frame geometry in scene units (1 unit = 100 mm). Z is the long axis.
 
 import { Euler, Matrix4, Vector3 } from "three";
 
@@ -26,7 +25,7 @@ export function frameDims(frame: Frame): FrameDims {
   };
 }
 
-/** Centre along Z of a run of slots. */
+
 export function slotRunCenter(dims: FrameDims, start: number, count: number): number {
   return -dims.z / 2 + (start + count / 2) * dims.slotPitch;
 }
@@ -35,7 +34,6 @@ export interface FacePose {
   position: Vec3;
   rotation: Vec3;
   normal: Vec3;
-  /** Panel size in its local X and Y. Local +Z is the outward normal. */
   width: number;
   height: number;
 }
@@ -49,7 +47,6 @@ const NORMALS: Record<Face, Vec3> = {
   "-Z": [0, 0, -1],
 };
 
-/** Pose of a plate lying on a face. On long faces, local X runs along the frame's long axis. */
 export function facePose(face: Face, dims: FrameDims, standoff = 0): FacePose {
   const normal = NORMALS[face];
   const isEnd = face === "+Z" || face === "-Z";

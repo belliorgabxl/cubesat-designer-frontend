@@ -71,7 +71,6 @@ function serialize(doc: BuilderDoc): string {
 }
 
 export const useBuilderStore = create<BuilderState>((set, get) => {
-  /** Apply a change as one undo step; rapid changes sharing a key collapse into a single step. */
   function commit(change: Partial<BuilderDoc>, coalesceKey?: string) {
     const { doc, past, coalesce } = get();
     if (!doc) return;
@@ -255,7 +254,6 @@ export const useBuilderStore = create<BuilderState>((set, get) => {
     },
 
     select: (selection) => set({ selection }),
-    // Slots and faces are highlighted in their assembled positions, so reassemble before dropping.
     startDrag: (slug) => set({ draggingSlug: slug, dropTarget: null, exploded: false, selection: null, notice: null }),
     setDropTarget: (dropTarget) => set({ dropTarget }),
     endDrag: () => set({ draggingSlug: null, dropTarget: null }),

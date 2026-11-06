@@ -128,8 +128,6 @@ function Editor({ catalogue }: { catalogue: Catalogue }) {
     return () => window.removeEventListener("beforeunload", warnIfUnsaved);
   }, []);
 
-  // After a first save the URL becomes /builder/<id> without remounting, so a click
-  // on the "ออกแบบ" link arrives here as a path change rather than a new page.
   useEffect(() => {
     if (pathname === "/builder" && useBuilderStore.getState().designId !== null) {
       useBuilderStore.getState().startNew(defaultFrame(catalogue.frames));

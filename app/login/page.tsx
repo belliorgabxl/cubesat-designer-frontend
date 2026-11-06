@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { AuthForm } from "@/components/AuthForm";
 
-export const metadata = { title: "เข้าสู่ระบบ — CubeSat Designer" };
+export const metadata = { title: "เข้าสู่ระบบ" };
 
 export default function LoginPage() {
   return (

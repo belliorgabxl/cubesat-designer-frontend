@@ -33,7 +33,6 @@ type LoadState<T> =
   | { status: "error"; message: string; httpStatus: number | null }
   | { status: "ready"; data: T };
 
-/** Run an async loader on mount and whenever `key` changes, with retry. */
 export function useLoad<T>(loader: () => Promise<T>, key: string): LoadState<T> & { retry: () => void } {
   const [attempt, setAttempt] = useState(0);
   const token = `${key}:${attempt}`;
@@ -54,8 +53,6 @@ export function useLoad<T>(loader: () => Promise<T>, key: string): LoadState<T> 
     return () => {
       active = false;
     };
-    // The loader is re-created every render; `token` is what identifies a load.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const retry = useCallback(() => setAttempt((value) => value + 1), []);

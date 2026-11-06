@@ -1,5 +1,3 @@
-// Mirrors the JSON produced by backend/satellites/serializers.py and services/.
-
 export type Category =
   | "OBC"
   | "EPS_BATTERY"

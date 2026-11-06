@@ -10,7 +10,6 @@ import { FrameMesh } from "./FrameMesh";
 import { InternalModule } from "./InternalModule";
 import { SolarPanel } from "./SolarPanel";
 
-/** The assembled satellite in frame coordinates. The long axis is local Z. */
 export function SatelliteModel({
   frame,
   placements,

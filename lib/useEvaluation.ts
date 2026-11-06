@@ -21,7 +21,7 @@ interface Input {
   placements: Placements;
 }
 
-/** Budget figures from Django, debounced; the frontend never computes them itself. */
+
 export function useEvaluation(input: Input | null): EvaluationState {
   const [attempt, setAttempt] = useState(0);
   const [settled, setSettled] = useState<{ key: string; result: Evaluation | null; error: string | null }>({
@@ -56,7 +56,7 @@ export function useEvaluation(input: Input | null): EvaluationState {
       window.clearTimeout(timer);
       controller.abort();
     };
-    // `key` is a stable serialization of `input`.
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 

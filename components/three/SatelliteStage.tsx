@@ -49,7 +49,7 @@ function Floor({ assembledY, explodedY, exploded }: { assembledY: number; explod
   );
 }
 
-/** Canvas, camera, lights and floor shared by the builder and the read-only viewer. */
+
 export default function SatelliteStage({
   frame,
   exploded = false,

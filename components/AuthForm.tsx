@@ -8,7 +8,6 @@ import { Button } from "@/components/ui";
 import { api, ApiError } from "@/lib/api";
 import { useAuthStore } from "@/store/auth";
 
-/** Only same-site paths, so a crafted ?next= link cannot send people to another site. */
 function safeNext(next: string | null): string {
   return next && next.startsWith("/") && !next.startsWith("//") ? next : "/my-designs";
 }
