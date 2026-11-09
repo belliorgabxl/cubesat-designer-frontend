@@ -6,11 +6,17 @@ import { Box3, Vector3 } from "three";
 
 import type { Vec3 } from "@/lib/geometry";
 
+import { NO_RAYCAST } from "./detail/DetailMeshes";
+
 function FittedGlb({ url, size }: { url: string; size: Vec3 }) {
   const { scene } = useGLTF(url);
 
   const { clone, scale, offset } = useMemo(() => {
     const copy = scene.clone(true);
+    // Picking goes to the module's hit box; testing every triangle of a GLB is slow.
+    copy.traverse((object) => {
+      object.raycast = NO_RAYCAST;
+    });
     const box = new Box3().setFromObject(copy);
     const extent = box.getSize(new Vector3());
     const center = box.getCenter(new Vector3());

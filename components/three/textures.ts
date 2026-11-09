@@ -1,54 +1,95 @@
 import { CanvasTexture, RepeatWrapping, SRGBColorSpace } from "three";
 
-let solarCell: CanvasTexture | null = null;
+import { seededRandom } from "./detail/kit";
 
-/** One solar cell: dark blue silicon, silver fingers and bus bars. Tiled across each panel. */
-export function solarCellTexture(): CanvasTexture {
-  if (solarCell) return solarCell;
-  const size = 256;
+const CELL_TEXTURE_WIDTH = 512;
+const CELL_TEXTURE_HEIGHT = 256;
+
+let cellBase: CanvasTexture | null = null;
+const cellTiles = new Map<string, CanvasTexture>();
+
+/**
+ * One triple-junction cell with cropped corners, grid fingers, a bus bar and the
+ * interconnect tabs that bridge to the next cell. Tiled across each panel.
+ */
+function drawSolarCell(): CanvasTexture {
+  const width = CELL_TEXTURE_WIDTH;
+  const height = CELL_TEXTURE_HEIGHT;
   const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size;
+  canvas.width = width;
+  canvas.height = height;
   const context = canvas.getContext("2d")!;
 
-  const gradient = context.createLinearGradient(0, 0, size, size);
-  gradient.addColorStop(0, "#1d438f");
-  gradient.addColorStop(1, "#10296a");
-  context.fillStyle = gradient;
-  context.fillRect(0, 0, size, size);
+  context.fillStyle = "#0a0e17";
+  context.fillRect(0, 0, width, height);
 
-  context.strokeStyle = "rgba(190, 205, 235, 0.22)";
+  const gap = 6;
+  const crop = 26;
+  const left = gap;
+  const right = width - gap;
+  const top = gap;
+  const bottom = height - gap;
+  context.beginPath();
+  context.moveTo(left + crop, top);
+  context.lineTo(right, top);
+  context.lineTo(right, bottom);
+  context.lineTo(left + crop, bottom);
+  context.lineTo(left, bottom - crop);
+  context.lineTo(left, top + crop);
+  context.closePath();
+
+  const gradient = context.createLinearGradient(0, 0, width, height);
+  gradient.addColorStop(0, "#26368c");
+  gradient.addColorStop(0.55, "#16225f");
+  gradient.addColorStop(1, "#1d2c78");
+  context.fillStyle = gradient;
+  context.fill();
+
+  context.save();
+  context.clip();
+  context.strokeStyle = "rgba(200, 212, 238, 0.16)";
   context.lineWidth = 1;
-  for (let y = 8; y < size; y += 10) {
+  for (let x = left + crop + 4; x < right; x += 9) {
     context.beginPath();
-    context.moveTo(0, y);
-    context.lineTo(size, y);
+    context.moveTo(x, top + 16);
+    context.lineTo(x, bottom);
     context.stroke();
   }
+  const sheen = context.createLinearGradient(0, height, width, 0);
+  sheen.addColorStop(0.35, "rgba(255, 255, 255, 0)");
+  sheen.addColorStop(0.5, "rgba(170, 190, 255, 0.07)");
+  sheen.addColorStop(0.65, "rgba(255, 255, 255, 0)");
+  context.fillStyle = sheen;
+  context.fillRect(0, 0, width, height);
+  context.restore();
 
-  context.fillStyle = "rgba(205, 215, 235, 0.75)";
-  context.fillRect(size * 0.33, 0, 3, size);
-  context.fillRect(size * 0.66, 0, 3, size);
+  context.fillStyle = "rgba(214, 222, 238, 0.85)";
+  context.fillRect(left + crop, top + 4, right - left - crop - 4, 7);
+  for (const x of [120, 256, 392]) {
+    context.fillRect(x, 0, 22, top + 10);
+    context.fillRect(x, bottom, 22, height - bottom);
+  }
 
-  context.strokeStyle = "#020510";
-  context.lineWidth = 8;
-  context.strokeRect(0, 0, size, size);
-
-  solarCell = new CanvasTexture(canvas);
-  solarCell.wrapS = RepeatWrapping;
-  solarCell.wrapT = RepeatWrapping;
-  solarCell.colorSpace = SRGBColorSpace;
-  solarCell.anisotropy = 8;
-  return solarCell;
+  const texture = new CanvasTexture(canvas);
+  texture.wrapS = RepeatWrapping;
+  texture.wrapT = RepeatWrapping;
+  texture.colorSpace = SRGBColorSpace;
+  texture.anisotropy = 8;
+  return texture;
 }
 
-/** Small deterministic generator, so the fallback Earth looks the same on every load. */
-function seededRandom(seed: number) {
-  let state = seed;
-  return () => {
-    state = (state * 1664525 + 1013904223) % 4294967296;
-    return state / 4294967296;
-  };
+/** The cell texture repeated `repeatX` x `repeatY` times; clones share one uploaded image. */
+export function solarCellTexture(repeatX: number, repeatY: number): CanvasTexture {
+  const key = `${repeatX}x${repeatY}`;
+  let tile = cellTiles.get(key);
+  if (!tile) {
+    cellBase ??= drawSolarCell();
+    tile = cellBase.clone();
+    tile.repeat.set(repeatX, repeatY);
+    tile.needsUpdate = true;
+    cellTiles.set(key, tile);
+  }
+  return tile;
 }
 
 let fallbackEarth: CanvasTexture | null = null;
