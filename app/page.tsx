@@ -36,7 +36,7 @@ export default function LandingPage() {
             <h1 className="mt-3 text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">
               ออกแบบ CubeSat
               <br />
-              <span className="text-solar">แล้วส่งขึ้นโคจร</span>
+              <span className="text-solar">เพื่อการเรียนรู้</span>
             </h1>
             <p className="mt-4 max-w-md leading-relaxed text-ink-dim">
               ประกอบดาวเทียมในแบบ 3 มิติ คำนวณงบน้ำหนักและพลังงาน แล้วจำลองดูว่าแบตเตอรี่พอตลอดวงโคจรหรือไม่

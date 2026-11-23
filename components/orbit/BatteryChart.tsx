@@ -18,9 +18,6 @@ import type { Simulation, SimulationPoint } from "@/lib/types";
 const MAX_POINTS = 360;
 const LOW_BATTERY_PCT = 30;
 const ORBIT_COUNT = 3;
-
-// The moving cursor is an HTML overlay positioned over the plot, so that animating
-// it does not re-render the chart. These numbers tie the overlay to the plot area.
 const Y_AXIS_WIDTH = 40;
 const MARGIN_RIGHT = 14;
 const MARGIN_TOP = 8;

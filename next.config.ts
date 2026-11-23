@@ -11,8 +11,7 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // Django routes end in "/". Next would otherwise 308-redirect those requests
-  // to the slash-less form, which breaks POST bodies once proxied.
+
   skipTrailingSlashRedirect: true,
   devIndicators: false,
   async rewrites() {

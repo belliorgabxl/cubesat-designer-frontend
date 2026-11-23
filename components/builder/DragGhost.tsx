@@ -8,7 +8,6 @@ import { useBuilderStore } from "@/store/builder";
 
 const OFFSET_PX = 14;
 
-/** The label that follows the pointer while a part is dragged from the library. */
 export function DragGhost({ modules }: { modules: ModuleMap }) {
   const slug = useBuilderStore((state) => state.draggingSlug);
   const target = useBuilderStore((state) => state.dropTarget);

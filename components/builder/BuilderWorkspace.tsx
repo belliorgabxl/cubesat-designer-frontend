@@ -257,7 +257,6 @@ function Editor({ catalogue }: { catalogue: Catalogue }) {
   );
 }
 
-/** Phones and small tablets get a look at the design and a pointer to a real screen. */
 function MobileNotice({ catalogue }: { catalogue: Catalogue }) {
   const doc = useBuilderStore((state) => state.doc);
   const frame = catalogue.frames.find((item) => item.id === doc?.frameId) ?? null;
@@ -314,7 +313,6 @@ export function BuilderWorkspace({ designId }: { designId?: string }) {
   if (catalogue.status === "error") return <ErrorState message={catalogue.message} onRetry={catalogue.retry} />;
   if (design.status === "error") {
     if (design.httpStatus === 401) return <Spinner />;
-    // Being refused or a missing design will not change on retry.
     if (design.httpStatus === 403 || design.httpStatus === 404) {
       return (
         <div className="flex flex-1 flex-col items-center justify-center">

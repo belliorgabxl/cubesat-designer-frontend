@@ -85,7 +85,6 @@ function useEarthTexture(): Texture {
       },
       undefined,
       () => {
-        // A missing file is the expected case until the user adds one.
       },
     );
     return () => {
@@ -148,7 +147,6 @@ function OrbitRing({ radius, eclipseFraction }: { radius: number; eclipseFractio
   );
 }
 
-/** Moves the satellite and fades the lights while it is inside Earth's shadow. */
 function Flight({
   frame,
   placements,
@@ -173,7 +171,7 @@ function Flight({
 
     if (satellite.current) {
       satellite.current.position.set(x, 0, z);
-      // Keep the same side facing Earth as it goes round.
+
       satellite.current.rotation.y = -angle;
     }
 
